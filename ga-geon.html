@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" >
+	<head>
+		<meta charset="utf-8" />
+		<meta name="author" content="Script Tutorials" />
+		<title>GA-Geon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,
+                                   maximum-scale=1.0, user-scalable=no">
+	</head>
+
+  <script type="text/javascript" src="lib/three.min.71.js"></script>
+  <script type="text/javascript" src="lib/THREEx.WindowResize.js"></script>
+  <script type="text/javascript" src="lib/OrbitControls.js"></script>
+
+  <script type="text/javascript" src="Tools.js"></script>
+  <script type="text/javascript" src="Metric.js"></script>	
+  <script type="text/javascript" src="Geon.js"></script>
+  <script type="text/javascript" src="GeonType.js"></script>
+  <script type="text/javascript" src="Relation.js"></script>
+  <script type="text/javascript" src="ComplexityAgent.js"></script>
+  <script type="text/javascript" src="VerticalSymmetryAgent.js"></script>
+  <script type="text/javascript" src="AlignmentAgent.js"></script>
+  <script type="text/javascript" src="GeonGenerator.js"></script>			
+
+  <script type="text/javascript" src="script.js"></script>
+
+  <body>
+    <div id="tools" style="position: absolute; top: 200px; right: 50px; width: 40px;">
+      <a onclick="ViewControl.addUserGeon(4)"><img src="img/new.png" style="border-style: solid; border-width: 2px; border-color: #567612; margin: 1px;"/></a>
+      <a onclick="ViewControl.rotateUpClick()"><img src="img/tools1.png" style="border-style: solid; border-width: 2px; border-color: #567612; margin: 1px;"/></a>
+      <a onclick="ViewControl.rotateRightClick()"><img src="img/tools3.png" style="border-style: solid; border-width: 2px; border-color: #567612; margin: 1px;"/></a>
+      <a onclick="ViewControl.rotateDownClick()"><img src="img/tools2.png" style="border-style: solid; border-width: 2px; border-color: #567612; margin: 1px;"/></a>      
+      <a onclick="ViewControl.rotateLeftClick()"><img src="img/tools4.png" style="border-style: solid; border-width: 2px; border-color: #567612; margin: 1px;"/></a>
+      <a onclick="ViewControl.scalePlusClick()"><img src="img/tools5.png" style="border-style: solid; border-width: 2px; border-color: #567612; margin: 1px;"/></a>
+      <a onclick="ViewControl.scaleMinusClick()"><img src="img/tools6.png" style="border-style: solid; border-width: 2px; border-color: #567612; margin: 1px;"/></a>      
+    </div>
+	</body>
+</html>
