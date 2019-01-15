@@ -1,18 +1,16 @@
-class GeonGenerator {
-	constructor() {
-		this.complexityAgent = new ComplexityAgent();
-		this.verticalSymmetryAgent = new VerticalSymmetryAgent();
-		this.alignmentAgent = new AlignmentAgent();
-		this.geons = new Array();
-	}
+function GeonGenerator()
+{
+	this.complexityAgent = new ComplexityAgent();
+	this.verticalSymmetryAgent = new VerticalSymmetryAgent();
+	this.alignmentAgent = new AlignmentAgent();
+	this.geons = new Array();
 }
 
 GeonGenerator.prototype = 
 {	
-	
 	constructor: GeonGenerator,
 	
-	createMesh: function(geom, metric) 
+	createMesh: (geom, metric) =>
 	{
 		geom.applyMatrix( new THREE.Matrix4().makeTranslation(metric.translationX,
 															  metric.translationY,
@@ -30,7 +28,7 @@ GeonGenerator.prototype =
 		return mesh;
 	},		
 
-	drawSquare: function()
+	drawSquare: () =>
 	{
 		var shape = new THREE.Shape();			
 		shape.moveTo(0, 0);
@@ -42,7 +40,7 @@ GeonGenerator.prototype =
 		return shape;			
 	},
 	
-	drawRectangle: function()
+	drawRectangle: () =>
 	{
 		var shape = new THREE.Shape();			
 		shape.moveTo(0, 0);
@@ -54,7 +52,7 @@ GeonGenerator.prototype =
 		return shape;		
 	},
 	
-	drawPolygon: function()
+	drawPolygon: () =>
 	{
 		var shape = new THREE.Shape();			
 		shape.moveTo(0, 0);
@@ -65,21 +63,21 @@ GeonGenerator.prototype =
 		return shape;			
 	},
 	
-	drawCircle: function()
+	drawCircle: () =>
 	{			
 		var shape = new THREE.Shape();
 		shape.absarc(5, 5, 5, 0, Math.PI * 2, false);
 		return shape;
 	},
 	
-	drawEllipse: function()
+	drawEllipse: () =>
 	{
 		var shape = new THREE.Shape();
 		shape.absellipse(5, 5, 5, 10, 0, Math.PI * 2, false);
 		return shape;
 	},
 	
-	drawIrregular: function()
+	drawIrregular: () =>
 	{
 		var shape = new THREE.Shape();		
 		
@@ -244,7 +242,7 @@ GeonGenerator.prototype =
 		}
 	},
 	
-	isInRelation: function(geon, agent)
+	isInRelation: (geon, agent) =>
 	{
 		for (var j = 0; j < agent.relations.length; j++)
 		{
@@ -259,7 +257,7 @@ GeonGenerator.prototype =
 		return false;
 	},
 
-	findAvailableGeons: function()
+	findAvailableGeons: () =>
 	{
 		var availableGeons = new Array();
 		for (var i = 0; i < this.geons.length; i++)
@@ -273,13 +271,13 @@ GeonGenerator.prototype =
 		return availableGeons;
 	},	
 	
-	addModifiedGeon: function (geon)
+	addModifiedGeon: (geon) =>
 	{
 		this.drawGeon(geon);
 		this.geons.push(geon);
 	},
 	
-	addGeon: function (agent)
+	addGeon: (agent) =>
 	{
 		var newGeons = agent.add(this.complexityAgent.getAllowedGeonTypes());
 		for(var i = 0; i < newGeons.length; i++)
@@ -291,39 +289,31 @@ GeonGenerator.prototype =
 		return newGeons;
 	},
 	
-	addByComplexityAgent: function()
+	addByComplexityAgent: () =>
 	{
 		return this.addGeon(this.complexityAgent);
 	},
 	
-	addByVerticalSymmetryAgent: function()
+	addByVerticalSymmetryAgent: () =>
 	{
 		return this.addGeon(this.verticalSymmetryAgent);
 	},
 
-	addByAlignmentAgent: function()
+	addByAlignmentAgent: () =>
 	{
 		return this.addGeon(this.alignmentAgent);
 	},
 	
-	modify: function (agent, availableGeons)
+	modify: (agent, availableGeons) =>
 	{
 		return agent.modify(availableGeons);
 	},
 	
-	modifyByAlignmentAgent: function()
+	modifyByAlignmentAgent: () =>
 	{
 		return this.modify(this.alignmentAgent, this.findAvailableGeons());
 	},
 
-	clearAll: function()
-	{
-		this.geons = new Array();
-		this.complexityAgent.clear();
-		this.verticalSymmetryAgent.clear();
-		this.alignmentAgent.clear();
-	},
-	
 	addUserGeon: function(geonTypeIndex)
 	{
 		var geonType = this.complexityAgent.allGeonTypes[geonTypeIndex];
@@ -342,5 +332,13 @@ GeonGenerator.prototype =
 
 		this.drawGeon(geon);
 		return geon;
+	},
+
+	clearAll: () =>
+	{
+		this.geons = new Array();
+		this.complexityAgent.clear();
+		this.verticalSymmetryAgent.clear();
+		this.alignmentAgent.clear();
 	}
 }

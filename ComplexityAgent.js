@@ -1,4 +1,4 @@
-function ComplexityAgent ()
+function ComplexityAgent()
 {
 	this.allGeonTypes = new Array();
 	
