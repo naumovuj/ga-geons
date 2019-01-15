@@ -1,22 +1,22 @@
 sbVertexShader = [
-"varying vec3 vWorldPosition;",
-"void main() {",
-"  vec4 worldPosition = modelMatrix * vec4( position, 1.0 );",
-"  vWorldPosition = worldPosition.xyz;",
-"  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
-"}",
+  "varying vec3 vWorldPosition;",
+  "void main() {",
+  "  vec4 worldPosition = modelMatrix * vec4( position, 1.0 );",
+  "  vWorldPosition = worldPosition.xyz;",
+  "  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
+  "}",
 ].join("\n");
 
 sbFragmentShader = [
-"uniform vec3 topColor;",
-"uniform vec3 bottomColor;",
-"uniform float offset;",
-"uniform float exponent;",
-"varying vec3 vWorldPosition;",
-"void main() {",
-"  float h = normalize( vWorldPosition + offset ).y;",
-"  gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( h, exponent ), 0.0 ) ), 1.0 );",
-"}",
+  "uniform vec3 topColor;",
+  "uniform vec3 bottomColor;",
+  "uniform float offset;",
+  "uniform float exponent;",
+  "varying vec3 vWorldPosition;",
+  "void main() {",
+  "  float h = normalize( vWorldPosition + offset ).y;",
+  "  gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( h, exponent ), 0.0 ) ), 1.0 );",
+  "}",
 ].join("\n");
 
 var ViewControl = {
@@ -37,34 +37,32 @@ var ViewControl = {
 
   init: function()
   {
-    // Create main scene
-    this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.FogExp2(0xcce0ff, 0.0003);
-    this.scene.fog = new THREE.FogExp2(0xffffff, 0.0003);
-
+    // picture parameters
     var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
-
-    // Prepare perspective camera
     var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1, FAR = 1000;
+
+    // create main scene
+    this.scene = new THREE.Scene();
+
+    // prepare perspective camera
     this.camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
     this.scene.add(this.camera);
     this.camera.position.set(100, 0, 0);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-    // Prepare webgl renderer
+    // prepare webGL renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-    this.renderer.setClearColor(this.scene.fog.color);
+    this.renderer.setClearColor(this.scene.color);
 
-    // Prepare container
+    // prepare container
+    var toolsMenu = document.getElementById('tools');
     this.container = document.createElement('div');
     document.body.appendChild(this.container);
     this.container.appendChild(this.renderer.domElement);
-    
-    var menu = document.getElementById('tools');
-    this.container.appendChild(menu);
+    this.container.appendChild(toolsMenu);
 
-    // Events
+    // events
     THREEx.WindowResize(this.renderer, this.camera);
     document.addEventListener('mousedown', this.onDocumentMouseDown, false);
     document.addEventListener('mousemove', this.onDocumentMouseMove, false);
@@ -256,7 +254,9 @@ var ViewControl = {
   },    
 };
 
-// Animate the scene
+
+
+// animate the scene
 function animate()
 {
   requestAnimationFrame(animate);
@@ -264,14 +264,14 @@ function animate()
   update();
 }
 
-// Update controls and stats
+// update controls
 function update()
 {
   var delta = ViewControl.clock.getDelta();
   ViewControl.controls.update(delta);
 }
 
-// Render the scene
+// render the scene
 function render()
 {
   if (ViewControl.renderer)
@@ -280,8 +280,8 @@ function render()
   }
 }
 
-// Initialize lesson on page load
-function initializeLesson()
+// initialize ViewControl on page load
+function initializeViewControl()
 {
   ViewControl.init();
   animate();
@@ -289,16 +289,16 @@ function initializeLesson()
 
 if (window.addEventListener)
 {
-  window.addEventListener('load', initializeLesson, false);
+  window.addEventListener('load', initializeViewControl, false);
 }
 else
 {
   if (window.attachEvent) 
   {
-    window.attachEvent('onload', initializeLesson);
+    window.attachEvent('onload', initializeViewControl);
   }
   else
   {
-    window.onload = initializeLesson;
+    window.onload = initializeViewControl;
   }
 }
