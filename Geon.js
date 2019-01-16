@@ -1,8 +1,8 @@
 function Geon(geonType)
 {
 	this.geonType = geonType;
-	this.metric;
-	this.solid;
+	this.metric; // coordinates
+	this.solid; // Mesh object
 }
 
 Geon.prototype = 

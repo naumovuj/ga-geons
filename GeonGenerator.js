@@ -16,7 +16,7 @@ GeonGenerator.prototype =
 															  metric.translationY,
 															  metric.translationZ) );
 
-		var material = new THREE.MeshPhongMaterial({color: 0xa7d8d93});
+		var material = new THREE.MeshPhongMaterial( {color: 0xa7d8d93} );
 		material.transparent = true;
 		
 		var mesh = new THREE.Mesh(geom.clone(), material);		
@@ -157,12 +157,11 @@ GeonGenerator.prototype =
 		
 			// Extrude shape
 			var extrudePath;
-			var amount; // VN: what is tha amaunt variable?
+			var amount; // VN: what is the amaunt variable?
 			if (geon.geonType.axisType === 0)
 			{
 				extrudePath = undefined; // default straight line
 				amount = 10;
-        
 				if (geon.geonType.symmetry === 2 && geon.geonType.crossSectionType === 1)
 				{
 					amount = 40;
@@ -173,11 +172,10 @@ GeonGenerator.prototype =
 				var x1 = 10, y1 = 5, z1 = 10;
 				var x2 = 10, y2 = 9, z2 = 5;
 				var x3 = 10, y3 = 9, z3 = 0;				
-				
 				extrudePath = new THREE.QuadraticBezierCurve3(
-					new THREE.Vector3( x1, y1, z1 ),
-					new THREE.Vector3( x2, y2, z2 ),
-					new THREE.Vector3( x3, y3, z3 )
+					new THREE.Vector3(x1, y1, z1),
+					new THREE.Vector3(x2, y2, z2),
+					new THREE.Vector3(x3, y3, z3)
 				);	
 				amount = 30;
 			}

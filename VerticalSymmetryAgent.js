@@ -1,4 +1,4 @@
-function VerticalSymmetryAgent ()
+function VerticalSymmetryAgent()
 {
 	this.relations = new Array();
 	this.axesLimit = 1;
@@ -8,7 +8,7 @@ VerticalSymmetryAgent.prototype =
 {	
 	constructor: VerticalSymmetryAgent,
 	
-	add: function (allowedGeonTypes)
+	add: function(allowedGeonTypes)
 	{
    		var geons = new Array();
 		
@@ -59,7 +59,7 @@ VerticalSymmetryAgent.prototype =
 				this.relations[i].geons = this.relations[i].geons.concat(geons);
 			}
 		}
-		if(!added)
+		if (!added)
 		{
 			var relation = new Relation(axis);
 			relation.geons = geons;
@@ -69,13 +69,13 @@ VerticalSymmetryAgent.prototype =
 		return geons;
 	},	
 	
-	modify: function (geons)
+	modify: function(geons)
 	{
 		// TODO
 	},
 	
 	// Allow modification for not ordered geons only
-	isModificationAllowed: function (geon)
+	isModificationAllowed: function(geon)
 	{
 		// TODO
 	},

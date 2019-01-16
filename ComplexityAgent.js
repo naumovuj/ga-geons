@@ -35,7 +35,6 @@ function ComplexityAgent()
 
 ComplexityAgent.prototype = 
 {	
-
 	constructor: ComplexityAgent,
 	
 	add: function(allowedGeonTypes)
@@ -49,15 +48,15 @@ ComplexityAgent.prototype =
 		metric.scaleX = Math.random() + 0.5;
 		metric.scaleY = metric.scaleX;
 		metric.scaleZ = metric.scaleX;		
-		metric.rotationZ = (2 * Math.PI) / Tools.getRandomInt(1, 10);	
+		metric.rotationZ = 2 * Math.PI / Tools.getRandomInt(1, 10);	
 		
 		var geon = new Geon(geonType);
 		geon.metric = metric;
 		
-		var geons = new Array();
-		geons.push(geon);
+		// var geons = new Array();
+		// geons.push(geon);
 		
-		return geons;
+		return [geon];
 	},
 	
 	setGeonTypesLimit: function(limitStr)

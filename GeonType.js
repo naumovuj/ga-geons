@@ -4,6 +4,7 @@
 * int axisType: 0 - straight, 1 - curved
 * int crossSectionChange: 0 - constant, 1 - decrease, 2 - increase + decrease
 *******************************************************************************************/
+
 function GeonType(axisType, symmetry, crossSectionType, crossSectionChange)
 {
 	this.axisType = axisType;

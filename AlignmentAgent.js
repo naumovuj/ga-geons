@@ -8,11 +8,11 @@ AlignmentAgent.prototype =
 {	
 	constructor: AlignmentAgent,
 	
-	add: function (allowedGeonTypes)
+	add: function(allowedGeonTypes)
 	{
    		var geons = new Array();		
 		var axis;
-		if(this.relations.length < this.axesLimit)
+		if (this.relations.length < this.axesLimit)
 		{
 			axis = Tools.getRandomInt(-10, 10);
 		}
@@ -23,7 +23,7 @@ AlignmentAgent.prototype =
 		var scale = 0.6;
 		var geonsNo = Tools.getRandomInt(2, 3);
 		
-		for(var i = 0; i < geonsNo; i ++)
+		for (var i = 0; i < geonsNo; i++)
 		{	
 			var geonType = allowedGeonTypes[Tools.getRandomInt(0, allowedGeonTypes.length - 1)];
 
@@ -42,14 +42,14 @@ AlignmentAgent.prototype =
 		}
 		
 		var added = false;
-		for(var i = 0; i < this.relations.length; i ++)
+		for (var i = 0; i < this.relations.length; i++)
 		{
 			if (this.relations[i].axis === axis)
 			{
 				this.relations[i].geons = this.relations[i].geons.concat(geons);
 			}
 		}
-		if(!added)
+		if (!added)
 		{
 			var relation = new Relation(axis);
 			relation.geons = geons;
@@ -57,7 +57,6 @@ AlignmentAgent.prototype =
 		}
 		
 		return geons;
-
 	},	
 	
 	modify: function(geons)
@@ -81,7 +80,7 @@ AlignmentAgent.prototype =
 	},
 	
 	// Allow modification for not ordered geons only
-	isModificationAllowed: function (geon)
+	isModificationAllowed: function(geon)
 	{
 		// TODO
 	},
@@ -89,6 +88,5 @@ AlignmentAgent.prototype =
 	clear: function()
 	{
 		this.relations = new Array();
-	}	
-	
+	}		
 }

@@ -8,7 +8,7 @@ function Metric()
 	this.scaleZ;
 	this.rotationX = 0;
 	this.rotationY = 0;
-	this.rotationZ;
+	this.rotationZ = 0;
 }
 
 Metric.prototype = 

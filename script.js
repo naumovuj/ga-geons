@@ -198,7 +198,7 @@ var ViewControl = {
   {
     var geon = this.geonGenerator.addUserGeon(geonTypeIndex);
     
-    geon.solid.position.x = 0;
+    geon.solid.position.x = Math.random() * 50 - 25;//0;
     geon.solid.position.y = Math.random() * 50 - 25;
     geon.solid.position.z = Math.random() * 50 - 25;
     
