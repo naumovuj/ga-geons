@@ -1,8 +1,8 @@
 function GeonGenerator()
 {
 	this.complexityAgent = new ComplexityAgent();
-	this.verticalSymmetryAgent = new VerticalSymmetryAgent();
-	this.alignmentAgent = new AlignmentAgent();
+	this.verticalSymmetryAgent = new VerticalSymmetryAgent();	// VN: how the agent is used?
+	this.alignmentAgent = new AlignmentAgent();					// VN: how the agent is used?
 	this.geons = new Array();
 }
 
@@ -187,7 +187,7 @@ GeonGenerator.prototype =
 				bevelEnabled: false,
 				extrudePath: extrudePath,
 			};	
-		  	geon.solid = this.createMesh(new THREE.ExtrudeGeometry(shape, options), geon.metric);
+		  	geon.solid = this.createMesh(new THREE.ExtrudeGeometry(shape, options), geon.metric); // Mesh object
 		}
 		else if (geon.geonType.crossSectionChange === 1) // a cone or a pyramid
 		{
