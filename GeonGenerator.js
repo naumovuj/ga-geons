@@ -66,14 +66,14 @@ GeonGenerator.prototype =
 	drawCircle: () =>
 	{			
 		var shape = new THREE.Shape();
-		shape.absarc(5, 5, 5, 0, Math.PI * 2, false);
+		shape.absarc(5, 5, 5, 0, 2 * Math.PI, false);
 		return shape;
 	},
 	
 	drawEllipse: () =>
 	{
 		var shape = new THREE.Shape();
-		shape.absellipse(5, 5, 5, 10, 0, Math.PI * 2, false);
+		shape.absellipse(5, 5, 5, 10, 0, 2 * Math.PI, false);
 		return shape;
 	},
 	
@@ -93,34 +93,33 @@ GeonGenerator.prototype =
 	drawGeon: function(geon)
 	{
 		// wrong parameter cases
-		if (geon.geonType.symmetry !== 0 &&
-			geon.geonType.symmetry !== 1 &&
-			geon.geonType.symmetry !== 2)
+		if ( geon.geonType.symmetry !== 0 &&
+			 geon.geonType.symmetry !== 1 &&
+			 geon.geonType.symmetry !== 2 )
 		{
 			console.log("Wrong parameter: symmetry " + symmetry);
 			return;
 		}
-		if (geon.geonType.crossSectionType !== 0 &&
-			geon.geonType.crossSectionType !== 1)
+		if ( geon.geonType.crossSectionType !== 0 &&
+			 geon.geonType.crossSectionType !== 1 )
 		{
 			console.log("Wrong parameter: crossSectionType " + geon.geonType.crossSectionType);
 			return;			
 		}
-		if (geon.geonType.axisType !== 0 &&
-			geon.geonType.axisType !== 1)
+		if ( geon.geonType.axisType !== 0 &&
+			 geon.geonType.axisType !== 1 )
 		{
 			console.log("Wrong parameter: axisType " + geon.geonType.axisType);
 			return;
 		}
-		if (geon.geonType.crossSectionChange !== 0 &&
-			geon.geonType.crossSectionChange !== 1 &&
-			geon.geonType.crossSectionChange !== 2)
+		if ( geon.geonType.crossSectionChange !== 0 &&
+			 geon.geonType.crossSectionChange !== 1 &&
+			 geon.geonType.crossSectionChange !== 2 )
 		{
 			console.log("Wrong parameter: crossSectionChange " + geon.geonType.crossSectionChange);
 			return;
 		}
 		
-	
 		if (geon.geonType.crossSectionChange === 0) // extrude cross section
 		{
 			// Draw cross section
@@ -158,7 +157,7 @@ GeonGenerator.prototype =
 		
 			// Extrude shape
 			var extrudePath;
-			var amount;
+			var amount; // VN: what is tha amaunt variable?
 			if (geon.geonType.axisType === 0)
 			{
 				extrudePath = undefined; // default straight line
@@ -323,12 +322,12 @@ GeonGenerator.prototype =
 		metric.translationY = 0;
 		metric.translationZ = 0;
 		metric.scaleX = 1;
-		metric.scaleY = metric.scaleX;
-		metric.scaleZ = metric.scaleX;		
-		metric.rotationZ = 0;	
+		metric.scaleY = 1;
+		metric.scaleZ = 1;
+		metric.rotationZ = 0;
 		
 		var geon = new Geon(geonType);
-		geon.metric = metric;	
+		geon.metric = metric;
 
 		this.drawGeon(geon);
 		return geon;

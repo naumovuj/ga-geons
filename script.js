@@ -48,7 +48,7 @@ var ViewControl = {
     this.camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
     this.scene.add(this.camera);
     this.camera.position.set(100, 0, 0);
-    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+    // this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     // prepare webGL renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -77,7 +77,7 @@ var ViewControl = {
     this.clock = new THREE.Clock();
 
     // Add lights
-    this.scene.add( new THREE.AmbientLight(0x444444));
+    this.scene.add( new THREE.AmbientLight(0x444444) );
 
     var dirLight = new THREE.DirectionalLight(0xffffff);
     dirLight.position.set(200, 200, 1000).normalize();
@@ -88,10 +88,15 @@ var ViewControl = {
     this.addSkybox();
 
     // Plane, that helps to determinate an intersection position
-    this.plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(500, 500, 8, 8),
-                                new THREE.MeshBasicMaterial({color: 0xff0000}));
+    this.plane = new THREE.Mesh( new THREE.PlaneBufferGeometry(500, 500, 8, 8),
+                                 new THREE.MeshBasicMaterial( {color: 0xff0000} ) );
     this.plane.visible = false;
     this.scene.add(this.plane);
+
+    // show axes
+    var axes = new THREE.AxisHelper(30);
+    this.scene.add(axes);
+
   },
 
   addSkybox: function()
@@ -100,7 +105,7 @@ var ViewControl = {
     var uniforms =
     {
       topColor: {type: "c", value: new THREE.Color(0x0077ff)},
-      bottomColor: {type: "c", value: new THREE.Color(0x00ff00)},
+      bottomColor: {type: "c", value: new THREE.Color(0xffffff)},
       offset: {type: "f", value: iSBrsize},
       exponent: {type: "f", value: 1.5}
     }
@@ -118,8 +123,8 @@ var ViewControl = {
   onDocumentMouseDown: function(event)
   {
     // Get mouse position
-    var mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    var mouseY = -(event.clientY / (window.innerHeight)) * 2 + 1;
+    var mouseX = 2 * event.clientX / window.innerWidth - 1;
+    var mouseY = -2 * event.clientY / window.innerHeight + 1;
 
     // Get 3D vector from 3D mouse position using 'unproject' function
     var vector = new THREE.Vector3(mouseX, mouseY, 1);
@@ -150,12 +155,12 @@ var ViewControl = {
     }
   },
 
-  onDocumentMouseMove: function (event) {
+  onDocumentMouseMove: function(event) {
     event.preventDefault();
 
     // Get mouse position
-    var mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    var mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+    var mouseX = 2 * event.clientX / window.innerWidth - 1;
+    var mouseY = -2 * event.clientY / window.innerHeight + 1;
 
     // Get 3D vector from 3D mouse position using 'unproject' function
     var vector = new THREE.Vector3(mouseX, mouseY, 1);

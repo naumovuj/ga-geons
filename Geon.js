@@ -1,4 +1,4 @@
-function Geon (geonType)
+function Geon(geonType)
 {
 	this.geonType = geonType;
 	this.metric;
@@ -8,5 +8,4 @@ function Geon (geonType)
 Geon.prototype = 
 {	
 	constructor: Geon
-	
 }

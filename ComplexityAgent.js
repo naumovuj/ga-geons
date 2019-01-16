@@ -9,8 +9,8 @@ function ComplexityAgent()
 	this.allGeonTypes.push(new GeonType(0, 0, 1, 0)); // irregular curved shape // TODO wywala się
 	this.allGeonTypes.push(new GeonType(0, 1, 0, 0)); // rectangle
 	this.allGeonTypes.push(new GeonType(0, 1, 1, 0)); // ellipse
-	this.allGeonTypes.push(new GeonType(0, 2, 0, 0)); // square
-	this.allGeonTypes.push(new GeonType(0, 2, 1, 0)); // circle
+	this.allGeonTypes.push(new GeonType(0, 2, 0, 0)); // square: index = 4 -> cube
+	this.allGeonTypes.push(new GeonType(0, 2, 1, 0)); // circle: index = 5
 	
 	// curved axis	
 	this.allGeonTypes.push(new GeonType(1, 0, 0, 0)); // irregular polygon
@@ -27,7 +27,7 @@ function ComplexityAgent()
 	this.allGeonTypes.push(new GeonType(0, 2, 1, 1)); // circle // TODO leży
 	
 	this.usedGeonTypes = new Array();
-		
+	
 	this.geonTypesLimit = 2;	
 	this.geonTypesLimitBottom = 1;
 	this.geonTypesLimitTop = 10;

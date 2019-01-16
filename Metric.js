@@ -1,4 +1,4 @@
-function Metric ()
+function Metric()
 {
 	this.translationX;
 	this.translationY;
@@ -14,5 +14,4 @@ function Metric ()
 Metric.prototype = 
 {	
 	constructor: Metric
-	
 }
