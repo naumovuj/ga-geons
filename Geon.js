@@ -1,11 +1,7 @@
-function Geon(geonType)
-{
+function Geon(geonType) {
 	this.geonType = geonType;
-	this.metric; // coordinates
+	this.metric; // coordinates, scale and rotation
 	this.solid; // Mesh object
 }
 
-Geon.prototype = 
-{	
-	constructor: Geon
-}
+Geon.prototype = { constructor: Geon }

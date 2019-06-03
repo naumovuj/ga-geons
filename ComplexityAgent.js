@@ -1,44 +1,43 @@
-function ComplexityAgent()
-{
+function ComplexityAgent() {
 	this.allGeonTypes = new Array();
-	
+
 	// extrude cross section
-	
+
 	// straight axis
 	this.allGeonTypes.push(new GeonType(0, 0, 0, 0)); // irregular polygon
-	this.allGeonTypes.push(new GeonType(0, 0, 1, 0)); // irregular curved shape // TODO wywala się
+	this.allGeonTypes.push(new GeonType(0, 0, 1, 0)); // irregular curved shape // TODO
 	this.allGeonTypes.push(new GeonType(0, 1, 0, 0)); // rectangle
 	this.allGeonTypes.push(new GeonType(0, 1, 1, 0)); // ellipse
 	this.allGeonTypes.push(new GeonType(0, 2, 0, 0)); // square: index = 4 -> cube
 	this.allGeonTypes.push(new GeonType(0, 2, 1, 0)); // circle: index = 5
-	
-	// curved axis	
+
+	// curved axis
 	this.allGeonTypes.push(new GeonType(1, 0, 0, 0)); // irregular polygon
-	this.allGeonTypes.push(new GeonType(1, 0, 1, 0)); // irregular curved shape // TODO wywala się
+	this.allGeonTypes.push(new GeonType(1, 0, 1, 0)); // irregular curved shape // TODO
 	this.allGeonTypes.push(new GeonType(1, 1, 0, 0)); // rectangle
 	this.allGeonTypes.push(new GeonType(1, 1, 1, 0)); // ellipse
 	this.allGeonTypes.push(new GeonType(1, 2, 0, 0)); // square
-	this.allGeonTypes.push(new GeonType(1, 2, 1, 0)); // circle	
-	
+	this.allGeonTypes.push(new GeonType(1, 2, 1, 0)); // circle
+
 	// pyramid
-	this.allGeonTypes.push(new GeonType(0, 2, 0, 1)); // square  // TODO leży
-	
+	this.allGeonTypes.push(new GeonType(0, 2, 0, 1)); // square  // TODO
+
 	// cone
-	this.allGeonTypes.push(new GeonType(0, 2, 1, 1)); // circle // TODO leży
-	
+	this.allGeonTypes.push(new GeonType(0, 2, 1, 1)); // circle // TODO
+
 	this.usedGeonTypes = new Array();
-	
-	this.geonTypesLimit = 2;	
+
+	this.geonTypesLimit = 2;
 	this.geonTypesLimitBottom = 1;
 	this.geonTypesLimitTop = 10;
 }
 
-ComplexityAgent.prototype = 
-{	
+ComplexityAgent.prototype =
+{
 	constructor: ComplexityAgent,
-	
-	add: function(allowedGeonTypes)
-	{
+
+	add: function(allowedGeonTypes)	{
+
 		var geonType = allowedGeonTypes[Tools.getRandomInt(0, allowedGeonTypes.length - 1)];
 
 		var metric = new Metric();
@@ -47,18 +46,15 @@ ComplexityAgent.prototype =
 		metric.translationZ = 0;
 		metric.scaleX = Math.random() + 0.5;
 		metric.scaleY = metric.scaleX;
-		metric.scaleZ = metric.scaleX;		
-		metric.rotationZ = 2 * Math.PI / Tools.getRandomInt(1, 10);	
-		
+		metric.scaleZ = metric.scaleX;
+		metric.rotationZ = 2 * Math.PI / Tools.getRandomInt(1, 10);
+
 		var geon = new Geon(geonType);
 		geon.metric = metric;
-		
-		// var geons = new Array();
-		// geons.push(geon);
-		
+
 		return [geon];
 	},
-	
+
 	setGeonTypesLimit: function(limitStr)
 	{
 		var limit = parseInt(limitStr);
@@ -66,38 +62,33 @@ ComplexityAgent.prototype =
 		{
 			alert('Not a number!');
 		}
-		else if (limit < this.geonTypesLimitBottom || limit > this.geonTypesLimitTop)
-		{
+		else if (limit < this.geonTypesLimitBottom ||
+			       limit > this.geonTypesLimitTop) {
 			alert('Wrong value!');
 		}
-		else
-		{
+		else {
 			this.geonTypesLimit = limit;
 		}
 	},
-	
+
 	getAllowedGeonTypes: function()
 	{
-		if (this.usedGeonTypes.length < this.geonTypesLimit)
-		{
+		if (this.usedGeonTypes.length < this.geonTypesLimit) {
 			return this.allGeonTypes;
 		}
-		else
-		{
+		else {
 			return this.usedGeonTypes;
 		}
 	},
-	
+
 	addGeonType: function(geonType)
 	{
-		if(!Tools.arrayContains(this.usedGeonTypes, geonType))
-		{
+		if (!Tools.arrayContains(this.usedGeonTypes, geonType)) {
 			this.usedGeonTypes.push(geonType);
 		}
 	},
-	
-	clear: function()
-	{
+
+	clear: function() {
 		this.usedGeonTypes = new Array();
 	}
 }
