@@ -5,15 +5,11 @@
 * int crossSectionChange: 0 - constant, 1 - decrease, 2 - increase + decrease
 *******************************************************************************************/
 
-function GeonType(axisType, symmetry, crossSectionType, crossSectionChange)
-{
+function GeonType(axisType, symmetry, crossSectionType, crossSectionChange) {
 	this.axisType = axisType;
 	this.symmetry = symmetry;
 	this.crossSectionType = crossSectionType;
 	this.crossSectionChange = crossSectionChange;
 }
 
-GeonType.prototype = 
-{	
-	constructor: GeonType
-}
+GeonType.prototype = { constructor: GeonType }

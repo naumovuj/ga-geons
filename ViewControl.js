@@ -19,6 +19,8 @@ sbFragmentShader = [
   "}",
 ].join("\n");
 
+var GEON_SIZE = 1;
+
 var ViewControl = {
 
   scene: null,
@@ -29,10 +31,12 @@ var ViewControl = {
   clock: null,
   plane: null,
   offset: new THREE.Vector3(),
-  objects: [], // VN: geons added to view
-  geonGenerator: new GeonGenerator(),
+  GA: new GA(),
+  geonGenerator: new GeonGenerator(GEON_SIZE),
+  objects: [], // VN: geons added to the current view
 
   init: function() {
+
     // picture parameters
     var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
     var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1, FAR = 1000;
@@ -67,7 +71,7 @@ var ViewControl = {
     // Prepare Orbit controls
     this.controls = new THREE.OrbitControls(this.camera);
     this.controls.target = new THREE.Vector3(0, 0, 0);
-    this.controls.maxDistance = 150;
+    this.controls.maxDistance = 250;
 
     // Prepare clock
     this.clock = new THREE.Clock();
@@ -115,17 +119,34 @@ var ViewControl = {
     this.scene.add(skyMesh);
   },
 
-  addUserGeon: function(geonTypeIndex) {
-    var geon = this.geonGenerator.addUserGeon(geonTypeIndex);
+  showShape: function() {
+    
+    // clear current view
+    // this.init();
+    this.objects = new Array(); 
 
-    geon.solid.position.x = Math.random() * 50 - 25; //0;
-    geon.solid.position.y = Math.random() * 50 - 25;
-    geon.solid.position.z = Math.random() * 50 - 25;
+    var code = this.GA.generateCode();
+    console.log(code);
 
-    this.scene.add(geon.solid);
-    this.objects.push(geon.solid);
+    var objs = this.GA.objects; //retrieveObjects(code);
+    console.log(objs);
+
+    for (var i = 0; i < objs.length; i++) {
+
+      var obj = objs[i];
+
+      var geon = this.geonGenerator.createUserGeon(obj.geonTypeIndex);
+      geon.solid.position.x = obj.x * this.geonGenerator.SIZE;
+      geon.solid.position.y = obj.y * this.geonGenerator.SIZE;
+      geon.solid.position.z = obj.z * this.geonGenerator.SIZE;
+      this.scene.add(geon.solid);
+      this.objects.push(geon.solid);
+    }
   }
+
 };
+
+
 
 // animate the scene
 function animate() {
@@ -154,12 +175,9 @@ function initializeViewControl() {
 
 if (window.addEventListener) {
   window.addEventListener('load', initializeViewControl, false);
-}
-else {
-  if (window.attachEvent) {
+} else if (window.attachEvent) {
     window.attachEvent('onload', initializeViewControl);
   }
   else {
     window.onload = initializeViewControl;
   }
-}
