@@ -2,7 +2,7 @@ function GA() {
     // GA parameters
     this.PopulationSize = 200;
     this.GenerationsNumber = 100;
-    this.GenesNumber = 500;
+    this.GenesNumber = 2000;
     this.MutationProbability = 0.01;
 	this.CrossoverProbability = 0.25;
     this.WinnersRate = 0.2;
@@ -29,7 +29,6 @@ GA.prototype = {
         var code = [];
 
         for (var i = 0; i < this.GenesNumber; i++) {
-
             var newCodeElement = {
                 objectIndex: Math.random() * this.objects.length |0,
                 neighborIndex: Math.random() * 6 |0
@@ -53,23 +52,17 @@ GA.prototype = {
         // define coordinates
         switch(codeElement.neighborIndex) {
             case 0: // front
-                newX += 1;
-                break;
+                newX += 1; break;
             case 1: // left
-                newY += 1;
-                break;
+                newY += 1; break;
             case 2: // behind
-                newX -= 1;
-                break;
+                newX -= 1; break;
             case 3: // right
-                newY -= 1;
-                break;
+                newY -= 1; break;
             case 4: // top
-                newZ += 1;
-                break;
+                newZ += 1; break;
             case 5: // bottom
-                newZ -= 1;
-                break;
+                newZ -= 1; break;
         }
 
         var newObject = {
@@ -93,7 +86,9 @@ GA.prototype = {
         var z = objectToCheck.z;
 
         for (var i = 0; i < this.objects.length; i++) {
-            if (this.objects[i].x == x && this.objects[i].y == y && this.objects[i].z == z)
+            if (this.objects[i].x == x &&
+                this.objects[i].y == y &&
+                this.objects[i].z == z)
                 return false;
         }
         return true;
@@ -157,25 +152,51 @@ GA.prototype = {
 
     fitness: function(code) {
         this.retrieveObjects(code);
+        
+        // #1 objects number -> max
+        // return this.objects.length / this.GenesNumber;
 
-        var minX = this.objects[0].x, maxX = this.objects[0].x;
-        var minY = this.objects[0].y, maxY = this.objects[0].y;
-        var minZ = this.objects[0].z, maxZ = this.objects[0].z;
+        // #2 the shape length -> max
+        // var minX = this.objects[0].x, maxX = this.objects[0].x;
+        // var minY = this.objects[0].y, maxY = this.objects[0].y;
+        // var minZ = this.objects[0].z, maxZ = this.objects[0].z;
+        // for (var i = 1; i < this.objects.length; i++) {
+        //     if (this.objects[i].x < minX) minX = this.objects[i].x;
+        //     if (this.objects[i].x > maxX) maxX = this.objects[i].x;
+        //     if (this.objects[i].y < minY) minY = this.objects[i].y;
+        //     if (this.objects[i].y > maxY) maxY = this.objects[i].y;
+        //     if (this.objects[i].z < minZ) minZ = this.objects[i].z;
+        //     if (this.objects[i].z > maxZ) maxZ = this.objects[i].z;
+        // }
+        // return  Math.max(maxX - minX, maxY - minY, maxZ - minZ) / 500.0;
 
+        // #3 symmetry
+        var subspace1 = 0; // x > 0, y > 0, z > 0
+        var subspace2 = 0; // x > 0, y > 0, z < 0
+        var subspace3 = 0; // x > 0, y < 0, z > 0
+        var subspace4 = 0; // x > 0, y < 0, z < 0
+        var subspace5 = 0; // x < 0, y > 0, z > 0
+        var subspace6 = 0; // x < 0, y > 0, z < 0
+        var subspace7 = 0; // x < 0, y < 0, z > 0
+        var subspace8 = 0; // x < 0, y < 0, z < 0
         for (var i = 1; i < this.objects.length; i++) {
-            if (this.objects[i].x < minX) minX = this.objects[i].x;
-            if (this.objects[i].x > maxX) maxX = this.objects[i].x;
-            if (this.objects[i].y < minY) minY = this.objects[i].y;
-            if (this.objects[i].y > maxY) maxY = this.objects[i].y;
-            if (this.objects[i].z < minZ) minZ = this.objects[i].z;
-            if (this.objects[i].z > maxZ) maxZ = this.objects[i].z;
+            if (this.objects[i].x > 0 && this.objects[i].y > 0 && this.objects[i].z > 0) subspace1++;
+            if (this.objects[i].x > 0 && this.objects[i].y > 0 && this.objects[i].z < 0) subspace2++;
+            if (this.objects[i].x > 0 && this.objects[i].y < 0 && this.objects[i].z > 0) subspace3++;
+            if (this.objects[i].x > 0 && this.objects[i].y < 0 && this.objects[i].z < 0) subspace4++;
+            if (this.objects[i].x < 0 && this.objects[i].y > 0 && this.objects[i].z > 0) subspace5++;
+            if (this.objects[i].x < 0 && this.objects[i].y > 0 && this.objects[i].z < 0) subspace6++;
+            if (this.objects[i].x < 0 && this.objects[i].y < 0 && this.objects[i].z > 0) subspace7++;
+            if (this.objects[i].x < 0 && this.objects[i].y < 0 && this.objects[i].z < 0) subspace8++;
         }
 
-        // return Math.min(maxX - minX, maxY - minY, maxZ - minZ);
-        return Math.max(maxX - minX, maxY - minY, maxZ - minZ);
-        // return this.objects.length / this.GenesNumber;
-    },
+        // console.log(subspace1 + ", " + subspace8 + ", " + subspace2 + ", " + subspace7 + ", " + 
+        //             subspace3 + ", " + subspace6 + ", " + subspace4 + ", " + subspace5);
 
+        return -(Math.abs(subspace1 - subspace8) + Math.abs(subspace2 - subspace7) +
+               Math.abs(subspace3 - subspace6) + Math.abs(subspace4 - subspace5));
+    
+    },
 
     evolve: function() {
 
@@ -219,5 +240,4 @@ GA.prototype = {
 
         return population[0].code;
     }
-
 }

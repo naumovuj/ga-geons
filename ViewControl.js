@@ -31,13 +31,14 @@ var ViewControl = {
   clock: null,
   plane: null,
   offset: new THREE.Vector3(),
+
   GA: new GA(),
   geonGenerator: new GeonGenerator(GEON_SIZE),
 
   init: function() {
-
     // picture parameters
     var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+  
     var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1, FAR = 1000;
 
     // create main scene
@@ -85,22 +86,18 @@ var ViewControl = {
     dirLight.position.set(200, 200, 1000).normalize();
     this.camera.add(dirLight);
     this.camera.add(dirLight.target);
-
     // Display skybox
     this.addSkybox();
-
     // Plane, that helps to determinate an intersection position
     this.plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(500, 500, 8, 8),
                                 new THREE.MeshBasicMaterial({color: 0xff0000}));
     this.plane.visible = false;
     this.plane.name = "plane"; // #3
     this.scene.add(this.plane);
-
     // show axes
     var axes = new THREE.AxisHelper(50);
     axes.name = "axes"; // #4
     this.scene.add(axes);
-
   },
 
   addSkybox: function() {
@@ -115,48 +112,49 @@ var ViewControl = {
 
     var skyGeo = new THREE.SphereGeometry(iSBrsize, 32, 32);
     var skyMat = new THREE.ShaderMaterial( { vertexShader: sbVertexShader,
-                                         fragmentShader: sbFragmentShader,
-                                         uniforms: uniforms,
-                                         side: THREE.DoubleSide,
-                                         fog: false } );
+                                             fragmentShader: sbFragmentShader,
+                                             uniforms: uniforms,
+                                             side: THREE.DoubleSide,
+                                             fog: false } );
     var skyMesh = new THREE.Mesh(skyGeo, skyMat);
     
     skyMesh.name = "sky"; // #5
     this.scene.add(skyMesh);
   },
 
-  showShape: function() {
-    
+  runGA: function() {
     this.clearScene();
-
-    var code1 = this.GA.generateCode();
-    var code2 = this.GA.generateCode();
-    var code = this.GA.getOffspring(code1, code2);
-    this.GA.mutate(code);
-
-    code = this.GA.evolve();
-
+    var code = this.GA.evolve();
     var objs = this.GA.retrieveObjects(code);
-
     console.log("Geons number in the shape: " + objs.length);
-
     for (var i = 0; i < objs.length; i++) {
-
       var obj = objs[i];
-
       var geon = this.geonGenerator.createUserGeon(obj.geonTypeIndex);
       geon.solid.position.x = obj.x * this.geonGenerator.SIZE;
       geon.solid.position.y = obj.y * this.geonGenerator.SIZE;
       geon.solid.position.z = obj.z * this.geonGenerator.SIZE;
       geon.solid.name = "geon";
-
       this.scene.add(geon.solid);
     }
+  },
 
+  showShape: function() {
+    this.clearScene();
+    var code = this.GA.generateCode();
+    var objs = this.GA.retrieveObjects(code);
+    console.log("Geons number in the shape: " + objs.length);
+    for (var i = 0; i < objs.length; i++) {
+      var obj = objs[i];
+      var geon = this.geonGenerator.createUserGeon(obj.geonTypeIndex);
+      geon.solid.position.x = obj.x * this.geonGenerator.SIZE;
+      geon.solid.position.y = obj.y * this.geonGenerator.SIZE;
+      geon.solid.position.z = obj.z * this.geonGenerator.SIZE;
+      geon.solid.name = "geon";
+      this.scene.add(geon.solid);
+    }
   },
 
   clearScene: function() {
-    
     // this.scene.children[0] --> camera
     // this.scene.children[1] --> light
     // this.scene.children[2] --> sky
@@ -168,11 +166,8 @@ var ViewControl = {
       if (this.scene.children[5].name == "geon") // just in case: not to delete smth important
         this.scene.remove(this.scene.children[5]);
     }
-
   }
-
 };
-
 
 // animate the scene
 function animate() {
